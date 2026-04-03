@@ -263,7 +263,7 @@ npm start
 #### 订单管理
 - 查看订单列表（待支付、待使用、已完成、已取消）
 - 查看订单详情
-- 取消订单（未支付的订单）
+- 取消订单（未完成的订单）
 - 订单二维码展示
 
 #### 评价功能
@@ -669,35 +669,10 @@ pm2 stop all      # 停止所有进程
 
 ## 📄 许可证
 
-本项目仅供学习交流使用。
-
-## ⚠️ attention
-
-✅ 可以安全删除的文件/文件夹：
-.claude/ - Claude Code 的本地工作目录
-backend/.env - 包含敏感配置信息
-backend/node_modules/ - Node.js 依赖包（可以通过 npm install 重新安装）
-backend/server.log - 日志文件
-backend/uploads/ 中的上传文件（保留目录结构）
-✅ 应该保留的文件：
-backend/.env.example - 配置文件模板（供其他开发者参考）
-backend/package.json - 依赖配置
-所有源代码文件
-📝 上传前的检查清单：
-
-1. 删除敏感文件
-rm -rf .claude/
-rm backend/.env
-2. 确认 .gitignore 已创建
-cat .gitignore
-3. 检查将要提交的文件
-git status
-4. 确保没有敏感信息
-git add .
-git commit -m "Initial commit"
+本项目为个人本科毕业设计作品，仅供学习交流使用。
 
 ---
 
-**祝你开发顺利！🏀**
+**欢迎交流学习！🏀**
 
 如有问题，请仔细阅读代码注释，所有功能都有详细的中文说明。

@@ -1,0 +1,244 @@
+/* ==================== 页面容器 ==================== */
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+/* ==================== 搜索栏 ==================== */
+.search-bar {
+  display: flex;
+  padding: 30rpx;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-bottom: 2rpx solid #f0f0f0;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04);
+}
+
+.search-input {
+  flex: 1;
+  height: 80rpx;
+  padding: 0 30rpx;
+  background-color: #f9fafb;
+  border: 2rpx solid #e5e7eb;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #FF6B35;
+  background-color: #fff;
+}
+
+.search-btn {
+  width: 130rpx;
+  height: 80rpx;
+  margin-left: 20rpx;
+  background: linear-gradient(135deg, #FF6B35 0%, #F77F00 100%);
+  color: #fff;
+  font-size: 28rpx;
+  line-height: 80rpx;
+  border-radius: 40rpx;
+  border: none;
+  font-weight: 500;
+  box-shadow: 0 4rpx 12rpx rgba(255, 107, 53, 0.3);
+  transition: all 0.3s ease;
+}
+
+.search-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 2rpx 6rpx rgba(255, 107, 53, 0.2);
+}
+
+/* ==================== 筛选栏 ==================== */
+.filter-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20rpx;
+  padding: 20rpx 30rpx;
+  background-color: #fff;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.filter-item {
+  width: 300rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  text-align: center;
+  background-color: #fff;
+  border: 2rpx solid #e5e7eb;
+  border-radius: 35rpx;
+  font-size: 28rpx;
+  color: #666;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.filter-item:active {
+  border-color: #FF6B35;
+  color: #FF6B35;
+  background-color: rgba(255, 107, 53, 0.05);
+}
+
+.reset-btn {
+  height: 70rpx;
+  line-height: 70rpx;
+  padding: 0 30rpx;
+  background-color: #f3f4f6;
+  color: #666;
+  font-size: 26rpx;
+  border-radius: 35rpx;
+  border: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.reset-btn:active {
+  background-color: #e5e7eb;
+}
+
+/* ==================== 场馆列表 ==================== */
+.venue-list {
+  flex: 1;
+  padding: 30rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.venue-item {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 20rpx;
+  margin-bottom: 30rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+  width: 90%;
+  max-width: 680rpx;
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.venue-item:active {
+  transform: translateY(-6rpx);
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.12);
+}
+
+.venue-image {
+  width: 100%;
+  height: 380rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+.venue-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255,107,53,0.1) 0%, transparent 50%);
+}
+
+.venue-info {
+  padding: 30rpx;
+  text-align: left;
+}
+
+.venue-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #1a1a1a;
+  margin-bottom: 15rpx;
+  text-align: left;
+}
+
+.venue-location {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+  text-align: left;
+}
+
+.venue-location::before {
+  content: '📍';
+  margin-right: 8rpx;
+  font-size: 28rpx;
+}
+
+.venue-facilities {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 25rpx;
+}
+
+.facility {
+  padding: 10rpx 20rpx;
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(247, 127, 0, 0.1) 100%);
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  color: #FF6B35;
+  margin-right: 10rpx;
+  margin-bottom: 10rpx;
+  font-weight: 500;
+  border: 1rpx solid rgba(255, 107, 53, 0.2);
+}
+
+.venue-price {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  background: linear-gradient(135deg, #FF6B35 0%, #F77F00 100%);
+  color: #fff;
+  padding: 12rpx 28rpx;
+  border-radius: 30rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  box-shadow: 0 6rpx 16rpx rgba(255, 107, 53, 0.4);
+  z-index: 1;
+}
+
+.book-btn {
+  width: 100%;
+  height: 80rpx;
+  background: linear-gradient(135deg, #FF6B35 0%, #F77F00 100%);
+  color: #fff;
+  font-size: 30rpx;
+  line-height: 80rpx;
+  text-align: center;
+  border-radius: 40rpx;
+  font-weight: 600;
+  margin-top: 10rpx;
+  box-shadow: 0 4rpx 12rpx rgba(255, 107, 53, 0.3);
+  transition: all 0.3s ease;
+}
+
+.book-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 6rpx rgba(255, 107, 53, 0.2);
+}
+
+/* ==================== 加载状态 ==================== */
+.loading, .no-more {
+  text-align: center;
+  padding: 30rpx;
+  color: #999;
+  font-size: 28rpx;
+}

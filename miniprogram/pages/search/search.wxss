@@ -1,0 +1,114 @@
+.container {
+  background: linear-gradient(180deg, #fff8f3 0%, #ffe8d6 100%);
+  min-height: 100vh;
+}
+
+.search-bar {
+  display: flex;
+  padding: 30rpx;
+  background: linear-gradient(135deg, #FF6B35 0%, #F77F00 100%);
+  box-shadow: 0 4rpx 20rpx rgba(255, 107, 53, 0.3);
+}
+
+.search-input {
+  flex: 1;
+  height: 80rpx;
+  padding: 0 30rpx;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.search-btn {
+  width: 130rpx;
+  height: 80rpx;
+  margin-left: 20rpx;
+  background: linear-gradient(135deg, #FF6B35 0%, #F77F00 100%);
+  color: #fff;
+  font-size: 28rpx;
+  line-height: 80rpx;
+  border-radius: 40rpx;
+  border: none;
+  box-shadow: 0 4rpx 15rpx rgba(255, 107, 53, 0.4);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.search-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 2rpx 10rpx rgba(255, 107, 53, 0.2);
+}
+
+.result-list {
+  padding: 30rpx;
+}
+
+.venue-item {
+  display: flex;
+  background: linear-gradient(135deg, #ffffff 0%, #fff5f0 100%);
+  border-radius: 20rpx;
+  margin-bottom: 25rpx;
+  padding: 25rpx;
+  box-shadow: 0 8rpx 25rpx rgba(255, 107, 53, 0.12);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.venue-item:active {
+  transform: translateY(-4rpx);
+  box-shadow: 0 12rpx 35rpx rgba(255, 107, 53, 0.2);
+}
+
+.venue-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6rpx;
+  height: 100%;
+  background: linear-gradient(180deg, #FF6B35 0%, #F77F00 100%);
+}
+
+.venue-image {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 15rpx;
+  margin-right: 25rpx;
+  box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.1);
+}
+
+.venue-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.venue-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 15rpx;
+}
+
+.venue-location {
+  font-size: 26rpx;
+  color: #7f8c8d;
+  display: flex;
+  align-items: center;
+}
+
+.venue-location::before {
+  content: '📍';
+  margin-right: 8rpx;
+}
+
+.loading, .empty {
+  text-align: center;
+  padding: 150rpx 0;
+  color: #95a5a6;
+  font-size: 30rpx;
+}

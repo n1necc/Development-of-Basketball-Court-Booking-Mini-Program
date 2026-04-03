@@ -1,0 +1,118 @@
+<!--
+  订单列表页面模板文件 (orders.wxml)
+  这是用户的订单列表页面，显示用户所有的预订订单。
+  页面包含：状态筛选标签、订单卡片列表（含订单号、状态、场馆信息、价格）、操作按钮、加载状态提示。
+-->
+
+<!-- 页面最外层容器 -->
+<view class="container">
+
+  <!-- ==================== 状态筛选标签栏 ==================== -->
+  <view class="status-tabs">
+    <view class="tab-item {{activeTab === 'all' ? 'active' : ''}}" bindtap="switchTab" data-tab="all">
+      <text class="tab-text">全部</text>
+      <text wx:if="{{tabCounts.all > 0}}" class="tab-badge">{{tabCounts.all}}</text>
+    </view>
+    <view class="tab-item {{activeTab === 'pending' ? 'active' : ''}}" bindtap="switchTab" data-tab="pending">
+      <text class="tab-text">待支付</text>
+      <text wx:if="{{tabCounts.pending > 0}}" class="tab-badge">{{tabCounts.pending}}</text>
+    </view>
+    <view class="tab-item {{activeTab === 'paid' ? 'active' : ''}}" bindtap="switchTab" data-tab="paid">
+      <text class="tab-text">待使用</text>
+      <text wx:if="{{tabCounts.paid > 0}}" class="tab-badge">{{tabCounts.paid}}</text>
+    </view>
+    <view class="tab-item {{activeTab === 'completed' ? 'active' : ''}}" bindtap="switchTab" data-tab="completed">
+      <text class="tab-text">已完成</text>
+    </view>
+    <view class="tab-item {{activeTab === 'cancelled' ? 'active' : ''}}" bindtap="switchTab" data-tab="cancelled">
+      <text class="tab-text">已取消</text>
+    </view>
+  </view>
+
+  <!-- ==================== 待支付订单特殊提示区域 ==================== -->
+  <view wx:if="{{activeTab === 'pending' && orders.length > 0}}" class="pending-notice">
+    <view class="notice-icon">⏰</view>
+    <view class="notice-content">
+      <text class="notice-title">您有 {{orders.length}} 笔待支付订单</text>
+      <text class="notice-subtitle">请在支付截止时间前完成支付，逾期订单将自动取消</text>
+    </view>
+  </view>
+
+  <!-- 订单列表容器 -->
+  <view class="order-list">
+
+    <!-- ==================== 订单卡片循环 ==================== -->
+    <view class="order-item {{item.order_status}}" wx:for="{{orders}}" wx:key="id" bindtap="viewOrder" data-id="{{item.id}}">
+
+      <!-- 订单头部：显示订单号和订单状态 -->
+      <view class="order-header">
+        <!-- 订单号 -->
+        <text class="order-no">订单号：{{item.order_no}}</text>
+        <!--
+          订单状态标签
+          class="order-status {{item.order_status}}"：根据状态动态添加样式类名
+          不同状态会有不同的颜色（如绿色表示待使用，灰色表示已完成等）
+
+          状态文字判断：
+          - 'unconfirmed'（未确认）→ 显示"未确认"
+          - 'pending'（待支付）→ 显示"待支付"
+          - 'paid'（已支付）→ 显示"待使用"
+          - 'completed'（已完成）→ 显示"已完成"
+          - 'cancelled'（已取消）→ 显示"已取消"
+          - 'refunded'（已退款）→ 显示"已退款"
+        -->
+        <text class="order-status {{item.order_status}}">
+          {{item.order_status === 'unconfirmed' ? '未确认' : item.order_status === 'pending' ? '待支付' : item.order_status === 'paid' ? '待使用' : item.order_status === 'completed' ? '已完成' : item.order_status === 'cancelled' ? '已取消' : '已退款'}}
+        </text>
+      </view>
+
+      <!-- 订单内容：显示场馆图片和预订信息 -->
+      <view class="order-content">
+        <!-- 场馆图片：显示该场馆图片数组中的第一张 -->
+        <image class="venue-image" src="{{item.venue.images[0]}}" mode="aspectFill" />
+        <view class="order-info">
+          <!-- 场馆名称 -->
+          <text class="venue-name">{{item.venue.name}}</text>
+          <!-- 预订日期和时段 -->
+          <text class="order-time">{{item.book_date}} {{item.start_time}}-{{item.end_time}}</text>
+          <!-- 订单总价 -->
+          <text class="order-price">¥{{item.total_price}}</text>
+          <!-- 待支付订单显示支付截止时间 -->
+          <view wx:if="{{item.order_status === 'pending' && item.payDeadline}}" class="pay-deadline">
+            <text class="deadline-icon">⏰</text>
+            <text class="deadline-text">支付截止：{{item.payDeadline}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- ==================== 订单底部操作区域 ==================== -->
+      <view class="order-footer">
+        <!-- 未确认订单：显示确认按钮 -->
+        <button wx:if="{{item.order_status === 'unconfirmed'}}" class="confirm-btn" catchtap="confirmOrder" data-id="{{item.id}}">确认订单</button>
+        <!-- 待支付订单：显示立即支付按钮（突出显示） -->
+        <view wx:if="{{item.order_status === 'pending'}}" class="pending-actions">
+          <text wx:if="{{item.payDeadline}}" class="deadline-hint">剩余 {{item.remainingTime}}</text>
+          <button class="pay-btn-primary" catchtap="payOrder" data-id="{{item.id}}">立即支付</button>
+        </view>
+        <!-- 已支付订单：显示取消按钮 -->
+        <button wx:if="{{item.order_status === 'paid'}}" class="cancel-btn" catchtap="cancelOrder" data-id="{{item.id}}">取消订单</button>
+      </view>
+    </view>
+
+    <!-- ==================== 列表状态提示 ==================== -->
+    <!-- 加载中提示：当 loading 为 true 时显示 -->
+    <view class="loading" wx:if="{{loading}}">加载中...</view>
+    <!--
+      没有更多数据提示：
+      noMore && orders.length > 0：数据已全部加载完 且 列表不为空时才显示
+      如果列表为空，应该显示"暂无订单"而不是"没有更多了"
+    -->
+    <view class="no-more" wx:if="{{noMore && orders.length > 0}}">没有更多了</view>
+    <!--
+      空状态提示：
+      orders.length === 0 && !loading：订单列表为空 且 不在加载中时显示
+      避免在数据还在加载时就显示"暂无订单"
+    -->
+    <view class="empty" wx:if="{{orders.length === 0 && !loading}}">暂无订单</view>
+  </view>
+</view>

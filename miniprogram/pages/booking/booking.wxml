@@ -1,0 +1,121 @@
+<!--
+  场馆预定列表页面模板文件 (booking.wxml)
+  这是场馆浏览和预定页面，用户可以搜索、筛选并查看所有可预定的篮球场馆。
+  页面包含：搜索栏、筛选栏（按球场类型）、场馆列表（支持下拉加载更多）。
+
+  【本页面涉及的重要概念】
+  - bindinput：输入框内容变化时触发的事件（用户每输入一个字就会触发一次）
+  - bindconfirm：用户在输入框按下"确认/回车"键时触发的事件
+  - <picker>：微信小程序的选择器组件，点击后会从底部弹出选项列表供用户选择
+  - <scroll-view>：可滚动的视图容器，支持上下或左右滚动
+  - bindscrolltolower：滚动到底部时触发的事件，常用于"加载更多"功能
+-->
+
+<!-- 页面最外层容器 -->
+<view class="container">
+
+  <!-- ==================== 搜索栏区域 ==================== -->
+  <!--
+    搜索栏包含一个输入框和一个搜索按钮
+    用户可以输入场地名称或位置来搜索场馆
+  -->
+  <view class="search-bar">
+    <!--
+      <input> 输入框组件
+      - placeholder="搜索场地名称或位置"：输入框为空时显示的灰色提示文字
+      - value="{{searchKeyword}}"：输入框的内容与 searchKeyword 变量双向绑定
+      - bindinput="onSearchInput"：用户每次输入内容时，触发 onSearchInput 函数，实时更新搜索关键词
+      - bindconfirm="onSearch"：用户按下键盘上的"搜索/确认"键时，触发 onSearch 函数执行搜索
+    -->
+    <input class="search-input" placeholder="搜索场地名称或位置" value="{{searchKeyword}}" bindinput="onSearchInput" bindconfirm="onSearch" />
+    <!-- 搜索按钮，点击执行搜索操作 -->
+    <button class="search-btn" bindtap="onSearch">搜索</button>
+  </view>
+
+  <!-- ==================== 筛选栏区域 ==================== -->
+  <!--
+    筛选栏用于按球场类型筛选场馆
+    包含一个类型选择器和一个重置按钮
+  -->
+  <view class="filter-bar">
+    <!--
+      <picker> 选择器组件，点击后从屏幕底部弹出选项列表
+      - mode="selector"：普通选择器模式（单选）
+      - range="{{venueTypes}}"：选项列表数据，来自 JS 中定义的 venueTypes 数组
+      - bindchange="onTypeChange"：用户选择某个选项后，触发 onTypeChange 函数
+    -->
+    <picker mode="selector" range="{{venueTypes}}" bindchange="onTypeChange">
+      <view class="filter-item">
+        <!--
+          显示当前选中的类型名称
+          如果 selectedType 有值就显示它，否则显示默认文字"球场类型"
+        -->
+        <text>{{selectedType || '球场类型'}}</text>
+      </view>
+    </picker>
+    <!--
+      重置按钮：清除所有筛选条件
+      wx:if="{{selectedType || searchKeyword}}"：只有当用户设置了筛选条件或输入了搜索词时才显示此按钮
+      这样在没有任何筛选条件时，重置按钮会自动隐藏
+    -->
+    <view class="reset-btn" bindtap="onReset" wx:if="{{selectedType || searchKeyword}}">
+      <text>重置</text>
+    </view>
+  </view>
+
+  <!-- ==================== 场馆列表区域 ==================== -->
+  <!--
+    <scroll-view> 可滚动视图容器
+    - scroll-y：允许纵向（上下）滚动
+    - bindscrolltolower="loadMore"：当用户滚动到列表底部时，触发 loadMore 函数加载更多场馆数据
+      这就是常见的"无限滚动加载"效果
+  -->
+  <scroll-view class="venue-list" scroll-y bindscrolltolower="loadMore">
+    <!--
+      wx:for="{{venues}}"：循环遍历场馆数组，每个场馆生成一个卡片
+      - item：当前遍历到的场馆数据对象
+      - item.id：场馆的唯一标识
+      bindtap="goToDetail"：点击场馆卡片跳转到场馆详情页
+      data-id="{{item.id}}"：把场馆ID传递给点击事件，详情页根据此ID加载数据
+    -->
+    <view class="venue-item" wx:for="{{venues}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+      <!-- 场馆图片区域，使用相对定位以便价格标签可以覆盖在图片上 -->
+      <view style="position: relative;">
+        <!--
+          场馆图片：显示图片数组的第一张
+          如果没有图片（item.images[0] 为空），则使用随机占位图
+        -->
+        <image class="venue-image" src="{{item.images[0] || 'https://picsum.photos/800/600?random=1'}}" mode="aspectFill" />
+        <!--
+          价格标签：覆盖显示在图片右下角
+          使用三元表达式：价格不为空显示价格，否则显示"暂无"
+        -->
+        <view class="venue-price">¥{{item.price != null ? item.price : '暂无'}}/时</view>
+      </view>
+      <!-- 场馆文字信息区域 -->
+      <view class="venue-info">
+        <!-- 场馆名称 -->
+        <text class="venue-name">{{item.name}}</text>
+        <!-- 场馆位置 -->
+        <text class="venue-location">{{item.location}}</text>
+        <!--
+          场馆设施标签列表
+          wx:for="{{item.facilities}}"：遍历当前场馆的设施数组
+          wx:for-item="facility"：将循环变量重命名为 facility（默认名是 item，
+          但外层已经用了 item，所以内层需要改名避免冲突）
+          每个设施显示为一个小标签
+        -->
+        <view class="venue-facilities">
+          <text class="facility" wx:for="{{item.facilities}}" wx:key="index" wx:for-item="facility">{{facility}}</text>
+        </view>
+        <!-- 预定按钮 -->
+        <view class="book-btn">立即预定</view>
+      </view>
+    </view>
+
+    <!-- 加载状态提示：当 loading 为 true 时显示"加载中..." -->
+    <view class="loading" wx:if="{{loading}}">加载中...</view>
+    <!-- 到底提示：当 noMore 为 true 时，表示所有数据已加载完毕 -->
+    <view class="no-more" wx:if="{{noMore}}">没有更多了</view>
+  </scroll-view>
+</view>

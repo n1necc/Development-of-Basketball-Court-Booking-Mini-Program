@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理后台 - 篮球场预定系统</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="admin-container">
+    <!-- 侧边栏 -->
+    <aside class="sidebar">
+      <div class="logo">篮球场管理</div>
+      <nav class="nav-menu">
+        <a href="#dashboard" class="nav-item active" data-page="dashboard">📊 数据概览</a>
+        <a href="#venues" class="nav-item" data-page="venues">🏀 场地管理</a>
+        <a href="#orders" class="nav-item" data-page="orders">📋 订单管理</a>
+        <a href="#users" class="nav-item" data-page="users">👥 用户管理</a>
+        <a href="#news" class="nav-item" data-page="news">📰 新闻管理</a>
+        <a href="#announcements" class="nav-item" data-page="announcements">📢 公告管理</a>
+        <a href="#statistics" class="nav-item" data-page="statistics">📈 统计报表</a>
+        <a href="#settings" class="nav-item" data-page="settings">⚙️ 系统设置</a>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="btn btn-logout" onclick="logout()">退出登录</button>
+      </div>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main class="main-content">
+      <header class="header">
+        <h2 id="pageTitle">数据概览</h2>
+        <div class="user-info">
+          <span id="adminName">管理员</span>
+        </div>
+      </header>
+
+      <div class="content" id="contentArea">
+        <!-- 动态加载内容 -->
+      </div>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/venues.js"></script>
+  <script src="js/orders.js"></script>
+  <script src="js/users.js"></script>
+  <script src="js/news.js"></script>
+  <script src="js/announcements.js"></script>
+  <script src="js/statistics.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

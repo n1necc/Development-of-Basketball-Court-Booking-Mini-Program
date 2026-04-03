@@ -1,0 +1,52 @@
+<!--
+  订单确认页面模板文件 (order-confirm.wxml)
+  这是用户提交订单前的确认页面，显示预订的详细信息供用户核对。
+  流程分为三步：创建订单 → 确认订单 → 支付订单
+
+  【页面说明】
+  这个页面的数据（venueName、date、startTime、endTime、price）
+  是从上一个页面（场馆详情页）传递过来的，用户在场馆详情页选择时段后跳转到此页面。
+-->
+
+<!-- 页面最外层容器 -->
+<view class="container">
+
+  <!-- ==================== 订单信息展示区域 ==================== -->
+  <view class="order-info">
+    <!-- 区域标题 -->
+    <text class="section-title">订单信息</text>
+
+    <!-- 场地名称行 -->
+    <view class="info-row">
+      <text class="label">场地名称：</text>
+      <!-- {{venueName}} 显示场馆名称，数据来自 JS 文件中的 data -->
+      <text class="value">{{venueName}}</text>
+    </view>
+
+    <!-- 预订日期行 -->
+    <view class="info-row">
+      <text class="label">预订日期：</text>
+      <text class="value">{{date}}</text>
+    </view>
+
+    <!-- 预订时段行 -->
+    <view class="info-row">
+      <text class="label">预订时段：</text>
+      <!-- 显示开始时间和结束时间，中间用 " - " 连接 -->
+      <text class="value">{{startTime}} - {{endTime}}</text>
+    </view>
+
+    <!-- 订单金额行（带有特殊的 total 样式，通常会加粗或放大显示） -->
+    <view class="info-row total">
+      <text class="label">订单金额：</text>
+      <!-- price 样式类通常会将金额显示为红色或醒目颜色 -->
+      <text class="value price">¥{{price}}</text>
+    </view>
+  </view>
+
+  <!-- ==================== 创建订单按钮 ==================== -->
+  <view class="step-container">
+    <button class="submit-btn" bindtap="submitOrder">创建订单</button>
+  </view>
+
+</view>

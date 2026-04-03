@@ -1,0 +1,119 @@
+<!--
+  个人中心页面模板文件 (my.wxml)
+  这是"我的"页面，显示用户个人信息和常用功能入口。
+  页面包含：用户头像和昵称、订单快捷入口（按状态分类）、功能菜单（收藏、退出登录）。
+
+  【条件渲染说明】
+  - wx:if="{{isLogin}}" 表示：只有当用户已登录时，才显示这部分内容
+  - wx:else 表示：当 wx:if 条件不满足时（即用户未登录时），显示这部分内容
+  - 这两个配合使用，可以根据登录状态显示不同的界面
+-->
+
+<!-- 页面最外层容器 -->
+<view class="container">
+
+  <!-- ==================== 用户信息区域（已登录状态） ==================== -->
+  <!--
+    wx:if="{{isLogin}}"：判断用户是否已登录
+    如果 isLogin 为 true（已登录），显示用户的真实头像和昵称
+    如果用户未授权头像或昵称，显示默认头像和"微信用户"
+  -->
+  <view class="user-header" wx:if="{{isLogin}}">
+    <!--
+      用户头像，使用三元表达式处理回退逻辑：
+      - 如果用户有头像地址则显示真实头像
+      - 如果头像为空则显示默认头像（base64编码的灰色用户图标）
+    -->
+    <image class="avatar" src="{{userInfo.avatarUrl || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI1MCIgZmlsbD0iI2UwZTBlMCIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iNDAiIHI9IjE1IiBmaWxsPSIjOTk5Ii8+PHBhdGggZD0iTTI1IDgwIFE1MCA2MCA3NSA4MCIgc3Ryb2tlPSIjOTk5IiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiLz48L3N2Zz4='}}" mode="aspectFill" />
+    <view class="user-info">
+      <!-- 
+        用户昵称，使用三元表达式处理回退逻辑：
+        - 如果用户有昵称则显示真实昵称
+        - 如果昵称为空则显示"微信用户"
+      -->
+      <text class="nickname">{{userInfo.nickName || '微信用户'}}</text>
+    </view>
+  </view>
+
+  <!-- ==================== 用户信息区域（未登录状态） ==================== -->
+  <!--
+    wx:else：当上面的 wx:if 条件不满足时（用户未登录），显示此区域
+    bindtap="goToLogin"：点击此区域跳转到登录页面
+  -->
+  <view class="user-header" wx:else bindtap="goToLogin">
+    <!--
+      未登录时显示默认头像（base64编码的灰色用户图标）
+      这是一个通用的用户头像占位图，提示用户点击登录
+    -->
+    <image class="avatar" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI1MCIgZmlsbD0iI2UwZTBlMCIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iNDAiIHI9IjE1IiBmaWxsPSIjOTk5Ii8+PHBhdGggZD0iTTI1IDgwIFE1MCA2MCA3NSA4MCIgc3Ryb2tlPSIjOTk5IiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiLz48L3N2Zz4=" mode="aspectFill" />
+    <view class="user-info">
+      <!-- 提示用户点击登录 -->
+      <text class="nickname">点击登录</text>
+    </view>
+  </view>
+
+  <!-- ==================== 我的订单快捷入口区域 ==================== -->
+  <!-- 只有登录后才显示订单入口 -->
+  <view class="order-section" wx:if="{{isLogin}}">
+    <text class="section-title">我的订单</text>
+    <!-- 订单状态分类标签页，点击不同标签跳转到对应状态的订单列表 -->
+    <view class="order-tabs">
+      <!--
+        每个标签都绑定了 bindtap="goToOrders" 点击事件
+        data-status="pending" 传递订单状态参数，告诉订单页面要显示哪种状态的订单
+        - pending：待支付的订单
+        - paid：已支付/待使用的订单
+        - completed：已完成的订单
+        - cancelled：已取消的订单
+        - ""（空字符串）：显示全部订单
+      -->
+      <view class="order-tab" bindtap="goToOrders" data-status="pending">
+        <text class="tab-icon">💳</text>
+        <text class="tab-text">待支付</text>
+        <text wx:if="{{pendingCount > 0}}" class="tab-badge">{{pendingCount}}</text>
+      </view>
+      <view class="order-tab" bindtap="goToOrders" data-status="paid">
+        <text class="tab-icon">📅</text>
+        <text class="tab-text">待使用</text>
+        <text wx:if="{{paidCount > 0}}" class="tab-badge">{{paidCount}}</text>
+      </view>
+      <view class="order-tab" bindtap="goToOrders" data-status="completed">
+        <text class="tab-icon">✅</text>
+        <text class="tab-text">已完成</text>
+      </view>
+      <view class="order-tab" bindtap="goToOrders" data-status="cancelled">
+        <text class="tab-icon">❌</text>
+        <text class="tab-text">已取消</text>
+      </view>
+      <view class="order-tab" bindtap="goToOrders" data-status="">
+        <text class="tab-icon">📋</text>
+        <text class="tab-text">全部订单</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ==================== 功能菜单区域 ==================== -->
+  <!-- 只有登录后才显示功能菜单 -->
+  <view class="menu-section" wx:if="{{isLogin}}">
+    <!-- 个人信息：点击跳转到个人信息编辑页面 -->
+    <view class="menu-item" bindtap="goToProfile">
+      <text class="menu-icon">👤</text>
+      <text class="menu-text">个人信息</text>
+      <!-- 右侧箭头，提示可以点击进入 -->
+      <text class="menu-arrow">></text>
+    </view>
+    <!-- 我的收藏：点击跳转到收藏列表页面 -->
+    <view class="menu-item" bindtap="goToFavorites">
+      <text class="menu-icon">⭐</text>
+      <text class="menu-text">我的收藏</text>
+      <!-- 右侧箭头，提示可以点击进入 -->
+      <text class="menu-arrow">></text>
+    </view>
+    <!-- 退出登录：点击执行退出登录操作 -->
+    <view class="menu-item" bindtap="logout">
+      <text class="menu-icon">🚪</text>
+      <text class="menu-text">退出登录</text>
+      <text class="menu-arrow">></text>
+    </view>
+  </view>
+</view>

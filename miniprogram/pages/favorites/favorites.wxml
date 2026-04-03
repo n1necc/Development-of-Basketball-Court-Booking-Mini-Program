@@ -1,0 +1,54 @@
+<!--
+  收藏列表页面模板文件 (favorites.wxml)
+  这是用户的收藏列表页面，显示用户收藏过的所有篮球场馆。
+  页面包含：收藏的场馆卡片列表（含图片、名称、位置）、取消收藏按钮、空状态和加载提示。
+
+  【本页面涉及的重要概念】
+  - catchtap：阻止事件冒泡的点击事件绑定
+    这里"取消收藏"按钮使用 catchtap 而不是 bindtap，
+    是为了防止点击按钮时同时触发外层卡片的跳转事件
+-->
+
+<!-- 页面最外层容器 -->
+<view class="container">
+
+  <!-- 收藏列表容器 -->
+  <view class="favorites-list">
+
+    <!-- ==================== 收藏场馆卡片循环 ==================== -->
+    <!--
+      wx:for="{{favorites}}"：遍历收藏列表数组，每个收藏的场馆生成一个卡片
+      - item：当前遍历到的场馆数据
+      bindtap="goToDetail"：点击卡片跳转到场馆详情页
+      data-id="{{item.id}}"：传递场馆ID给点击事件函数
+    -->
+    <view class="venue-item" wx:for="{{favorites}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+      <!-- 场馆图片：显示图片数组中的第一张 -->
+      <image class="venue-image" src="{{item.images[0]}}" mode="aspectFill" />
+      <view class="venue-info">
+        <!-- 场馆名称 -->
+        <text class="venue-name">{{item.name}}</text>
+        <!-- 场馆位置 -->
+        <text class="venue-location">{{item.location}}</text>
+      </view>
+      <!--
+        取消收藏按钮
+        catchtap="removeFavorite"：使用 catchtap 阻止事件冒泡
+        这样点击"取消收藏"时，只会执行取消收藏操作，
+        不会同时触发外层卡片的 goToDetail 跳转事件
+        data-id="{{item.id}}"：传递场馆ID，告诉函数要取消收藏哪个场馆
+      -->
+      <button class="remove-btn" catchtap="removeFavorite" data-id="{{item.id}}">取消收藏</button>
+    </view>
+
+    <!-- ==================== 列表状态提示 ==================== -->
+    <!--
+      空状态提示：当收藏列表为空 且 不在加载中时显示
+      favorites.length === 0：收藏数组长度为0，表示没有收藏任何场馆
+      && !loading：并且当前不在加载数据中（避免数据还没加载完就显示空状态）
+    -->
+    <view class="empty" wx:if="{{favorites.length === 0 && !loading}}">暂无收藏</view>
+    <!-- 加载中提示：当 loading 为 true 时显示 -->
+    <view class="loading" wx:if="{{loading}}">加载中...</view>
+  </view>
+</view>

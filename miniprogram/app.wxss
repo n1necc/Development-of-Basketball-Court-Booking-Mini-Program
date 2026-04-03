@@ -1,0 +1,142 @@
+/* ==================== 全局样式配置 ==================== */
+/* 篮球主题配色方案 */
+page {
+  background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --primary-color: #FF6B35;        /* 篮球橙色 - 主色 */
+  --secondary-color: #004E89;      /* 球场蓝色 - 辅助色 */
+  --accent-color: #F77F00;         /* 亮橙色 - 强调色 */
+  --success-color: #06D6A0;        /* 成功绿色 */
+  --warning-color: #FFD23F;        /* 警告黄色 */
+  --danger-color: #EF476F;         /* 危险红色 */
+  --text-primary: #1a1a1a;         /* 主文字颜色 */
+  --text-secondary: #666666;       /* 次要文字颜色 */
+  --text-light: #999999;           /* 浅色文字 */
+  --bg-white: #ffffff;             /* 白色背景 */
+  --bg-light: #f8f9fa;             /* 浅色背景 */
+  --border-color: #e9ecef;         /* 边框颜色 */
+  --shadow-sm: 0 2rpx 8rpx rgba(0,0,0,0.08);
+  --shadow-md: 0 4rpx 16rpx rgba(0,0,0,0.12);
+  --shadow-lg: 0 8rpx 24rpx rgba(0,0,0,0.15);
+}
+
+.container {
+  padding: 20rpx;
+}
+
+/* ==================== 按钮样式 ==================== */
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+  color: white;
+  border-radius: 50rpx;
+  box-shadow: 0 8rpx 16rpx rgba(255, 107, 53, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:active {
+  transform: scale(0.95);
+  box-shadow: 0 4rpx 8rpx rgba(255, 107, 53, 0.2);
+}
+
+.btn-default {
+  background-color: var(--bg-white);
+  color: var(--text-primary);
+  border: 2rpx solid var(--border-color);
+  border-radius: 50rpx;
+  transition: all 0.3s ease;
+}
+
+.btn-default:active {
+  background-color: var(--bg-light);
+  transform: scale(0.98);
+}
+
+/* ==================== 通用动画效果 ==================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10rpx);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* ==================== 通用卡片样式 ==================== */
+.card {
+  background: var(--bg-white);
+  border-radius: 20rpx;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.card:active {
+  transform: translateY(-4rpx);
+  box-shadow: var(--shadow-md);
+}
+
+/* ==================== 通用标签样式 ==================== */
+.tag {
+  display: inline-block;
+  padding: 8rpx 20rpx;
+  border-radius: 30rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+}
+
+.tag-primary {
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(247, 127, 0, 0.1) 100%);
+  color: var(--primary-color);
+}
+
+.tag-success {
+  background: rgba(6, 214, 160, 0.1);
+  color: var(--success-color);
+}
+
+.tag-warning {
+  background: rgba(255, 210, 63, 0.1);
+  color: var(--warning-color);
+}

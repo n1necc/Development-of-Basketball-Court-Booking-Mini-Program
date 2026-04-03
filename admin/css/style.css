@@ -1,0 +1,1207 @@
+/**
+ * ============================================================================
+ * 文件名：style.css
+ * 所属模块：篮球场预约系统 - 管理后台 - 全局样式表
+ * 文件说明：
+ *   这个文件定义了管理后台所有页面的视觉样式（外观）。
+ *   CSS（Cascading Style Sheets，层叠样式表）用于控制网页的布局、颜色、字体、间距等。
+ *
+ * 美化版本 - 篮球主题配色
+ *   主色：橙色 #FF6B35（篮球色）
+ *   辅助色：深蓝 #004E89（球场色）
+ *   强调色：亮橙 #F77F00
+ * ============================================================================
+ */
+
+/* ==========================================================================
+   第一部分：全局重置样式和CSS变量
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #FF6B35;
+  --secondary-color: #004E89;
+  --accent-color: #F77F00;
+  --success-color: #06D6A0;
+  --warning-color: #FFD23F;
+  --danger-color: #EF476F;
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --bg-light: #f8f9fa;
+  --border-color: #e9ecef;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+/* ==========================================================================
+   第二部分：登录页面样式 - 篮球主题
+   ========================================================================== */
+
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #FF6B35 0%, #F77F00 50%, #004E89 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 篮球纹理背景动画 */
+.login-page::before {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 2px, transparent 2px),
+    radial-gradient(circle at 60% 70%, rgba(255,255,255,0.1) 3px, transparent 3px),
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.12) 2px, transparent 2px);
+  background-size: 80px 80px, 120px 120px, 100px 100px;
+  animation: drift 25s linear infinite;
+  opacity: 0.6;
+}
+
+/* 漂浮的篮球装饰 */
+.login-page::after {
+  content: '🏀';
+  position: absolute;
+  font-size: 120px;
+  opacity: 0.1;
+  top: 10%;
+  right: 10%;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes drift {
+  from { transform: translate(0, 0) rotate(0deg); }
+  to { transform: translate(50px, 50px) rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-30px) rotate(180deg);
+  }
+}
+
+.login-container {
+  width: 100%;
+  max-width: 420px;
+  padding: 20px;
+  z-index: 1;
+}
+
+.login-box {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 50px 40px;
+  border-radius: 20px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+  animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-box h1 {
+  text-align: center;
+  margin-bottom: 40px;
+  background: linear-gradient(135deg, #FF6B35 0%, #F77F00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* ==========================================================================
+   表单组样式
+   ========================================================================== */
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background-color: #f8f9fa;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background-color: white;
+  box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
+}
+
+/* PLACEHOLDER_BUTTONS */
+
+/* ==========================================================================
+   第三部分：按钮样式 - 篮球主题
+   ========================================================================== */
+
+.btn {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, #FF6B35 0%, #F77F00 100%);
+  color: white;
+  box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(255, 107, 53, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
+}
+
+/* 其他按钮样式 */
+.btn-success {
+  background: linear-gradient(135deg, #06D6A0 0%, #04b386 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(6, 214, 160, 0.3);
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(6, 214, 160, 0.4);
+}
+
+.btn-warning {
+  background: linear-gradient(135deg, #FFD23F 0%, #f0c030 100%);
+  color: #333;
+  box-shadow: 0 4px 12px rgba(255, 210, 63, 0.3);
+}
+
+.btn-warning:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 210, 63, 0.4);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #EF476F 0%, #d63a5f 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(239, 71, 111, 0.3);
+}
+
+.btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(239, 71, 111, 0.4);
+}
+
+.btn-logout {
+  width: 100%;
+  background: linear-gradient(135deg, #EF476F 0%, #d63a5f 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(239, 71, 111, 0.3);
+}
+
+.btn-logout:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(239, 71, 111, 0.4);
+}
+
+/* ==========================================================================
+   第四部分：管理后台整体布局 - 现代化设计
+   ========================================================================== */
+
+/* 管理后台最外层容器：使用 Flexbox 实现左右分栏 */
+.admin-container {
+  display: flex;    /* 启用弹性布局 */
+  height: 100vh;   /* 高度占满整个视口 */
+}
+
+/* 侧边栏：固定宽度250px，深色渐变背景 */
+.sidebar {
+  width: 250px;
+  background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: white;
+  display: flex;
+  flex-direction: column;      /* 内部元素垂直排列 */
+  box-shadow: 2px 0 15px rgba(0, 0, 0, 0.3);
+}
+
+/* 侧边栏顶部的 Logo/标题区域 */
+.logo {
+  padding: 30px 20px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  /* 底部分隔线：半透明白色，营造层次感 */
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* 导航菜单区域：flex: 1 让它占据侧边栏的剩余空间 */
+.nav-menu {
+  flex: 1;         /* 占据剩余空间 */
+  padding: 20px 0;
+}
+
+/* 导航菜单项：每个菜单链接的样式 */
+.nav-item {
+  display: block;
+  padding: 15px 20px;
+  color: rgba(255,255,255,0.75);  /* 半透明白色文字 */
+  text-decoration: none;          /* 去掉链接的下划线 */
+  transition: all 0.3s ease;      /* 平滑过渡效果 */
+  border-left: 3px solid transparent;
+  position: relative;
+}
+
+/* 导航菜单项的悬停和激活状态：橙色左边框，背景变亮，文字变为纯白 */
+.nav-item:hover, .nav-item.active {
+  background-color: rgba(255, 107, 53, 0.15);  /* 篮球橙色半透明背景 */
+  color: white;
+  border-left-color: #FF6B35;
+  padding-left: 17px;
+}
+
+/* 侧边栏底部区域（通常放退出登录按钮） */
+.sidebar-footer {
+  padding: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);  /* 顶部分隔线 */
+}
+
+/* PLACEHOLDER_MAIN_CONTENT */
+
+/* 主内容区域：占据侧边栏右侧的所有剩余空间 */
+.main-content {
+  flex: 1;                     /* 占据剩余空间 */
+  display: flex;
+  flex-direction: column;      /* 内部元素垂直排列（顶部栏 + 内容区） */
+  overflow: hidden;            /* 隐藏溢出内容 */
+}
+
+/* 顶部栏：显示页面标题和用户信息 */
+.header {
+  background: linear-gradient(90deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 20px 30px;
+  border-bottom: 2px solid #FF6B35;  /* 篮球橙色底部边框 */
+  display: flex;
+  justify-content: space-between;  /* 左右两端对齐（标题在左，用户信息在右） */
+  align-items: center;             /* 垂直居中 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* 顶部栏标题样式 */
+.header h2 {
+  color: #1a1a1a;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* 顶部栏用户信息文字样式 */
+.user-info {
+  color: #666;
+  font-size: 14px;
+}
+
+/* 内容区域：可滚动的主要内容显示区 */
+.content {
+  flex: 1;              /* 占据主内容区的剩余空间 */
+  padding: 30px;
+  overflow-y: auto;     /* 内容超出时显示垂直滚动条 */
+}
+
+/* ==========================================================================
+   第五部分：卡片样式
+   作用：定义内容卡片的外观。卡片是管理后台中最常用的容器组件，
+   用于将相关内容分组显示，具有白色背景、圆角和轻微阴影效果。
+   ========================================================================== */
+
+/* 卡片容器 */
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  /* 增强的阴影效果，让卡片看起来"浮"在背景上方 */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border-top: 3px solid #FF6B35;
+}
+
+.card:hover {
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.15);
+  transform: translateY(-2px);
+}
+
+/* 卡片标题 */
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+}
+
+.card-title::before {
+  content: '';
+  width: 4px;
+  height: 20px;
+  background: linear-gradient(180deg, #FF6B35 0%, #F77F00 100%);
+  border-radius: 2px;
+  margin-right: 10px;
+}
+
+/* ==========================================================================
+   第六部分：统计卡片样式
+   作用：定义首页仪表盘中统计数据卡片的网格布局。
+   使用 CSS Grid（网格布局）实现自适应的多列排列。
+
+   显示效果示意：
+   ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐
+   │ 总用户数  │ │ 总预订数  │ │ 今日收入  │ │ 场地数量  │
+   │   1,234  │ │   5,678  │ │  ¥9,999  │ │    12    │
+   └──────────┘ └──────────┘ └──────────┘ └──────────┘
+   ========================================================================== */
+
+/* 统计卡片的网格容器 */
+.stats-grid {
+  display: grid;  /* 启用网格布局 */
+  /*
+   * grid-template-columns：定义网格列的宽度。
+   * repeat(auto-fit, minmax(250px, 1fr))：
+   *   - auto-fit：自动计算能放下多少列
+   *   - minmax(250px, 1fr)：每列最小250px，最大平均分配剩余空间
+   *   - 这样在大屏幕上会显示多列，小屏幕上自动减少列数（响应式布局）
+   */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;              /* 网格项之间的间距 */
+  margin-bottom: 30px;
+}
+
+/* 单个统计卡片 */
+.stat-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border-left: 4px solid #FF6B35;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.stat-card:hover {
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.15);
+  transform: translateY(-4px);
+}
+
+/* 统计卡片的标题（如"总用户数"） */
+.stat-card h3 {
+  font-size: 14px;
+  color: #999;          /* 浅灰色，作为辅助说明文字 */
+  margin-bottom: 10px;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+}
+
+/* 统计卡片的数值（如"1,234"） */
+.stat-card .value {
+  font-size: 32px;      /* 大号字体，突出显示数据 */
+  font-weight: 700;
+  background: linear-gradient(135deg, #FF6B35 0%, #F77F00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  z-index: 1;
+}
+
+/* PLACEHOLDER_TABLE_STYLES */
+
+/* ==========================================================================
+   第七部分：表格样式
+   作用：定义数据表格的外观，包括表头、单元格、悬停效果等。
+   表格用于展示用户列表、预订记录、场地信息等数据。
+   ========================================================================== */
+
+/* 表格基础样式 */
+.table {
+  width: 100%;              /* 宽度占满父容器 */
+  border-collapse: collapse; /* 合并相邻单元格的边框，避免出现双线边框 */
+}
+
+/* 表头和单元格的通用样式 */
+.table th, .table td {
+  padding: 14px 12px;        /* 单元格内边距 */
+  text-align: left;          /* 文字左对齐 */
+  border-bottom: 1px solid #eee;  /* 底部分隔线 */
+  transition: all 0.3s ease;
+}
+
+/* 表头样式：橙色渐变背景，加粗文字 */
+.table th {
+  background: linear-gradient(90deg, #FF6B35 0%, #F77F00 100%);
+  font-weight: 600;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* 表格行斑马纹效果 */
+.table tbody tr:nth-child(odd) {
+  background-color: #f8f9fa;
+}
+
+/* 表格行悬停效果：鼠标移到某一行时，背景变为橙色半透明 */
+.table tbody tr:hover {
+  background-color: rgba(255, 107, 53, 0.1);
+  transition: all 0.2s ease;
+}
+
+/* ==========================================================================
+   第八部分：状态标签样式
+   作用：定义不同状态的彩色标签（Badge）。
+   标签用于在表格中直观地显示数据的状态，如"正常"、"已预订"、"已取消"等。
+   不同状态使用不同的颜色：绿色=成功/正常，橙色=警告/待处理，红色=危险/异常。
+   ========================================================================== */
+
+/* 标签基础样式：圆角胶囊形状 */
+.badge {
+  display: inline-block;     /* 行内块元素，可以设置宽高但不独占一行 */
+  padding: 6px 14px;
+  border-radius: 20px;       /* 大圆角，形成胶囊形状 */
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+/* 成功/正常状态标签：绿色系 */
+.badge-success {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  color: #1AAD19;
+  border: 1px solid #a5d6a7;
+}
+
+.badge-success:hover {
+  box-shadow: 0 4px 12px rgba(26, 173, 25, 0.2);
+  transform: scale(1.05);
+}
+
+/* 警告/待处理状态标签：橙色系 */
+.badge-warning {
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+  color: #F77F00;
+  border: 1px solid #ffcc80;
+}
+
+.badge-warning:hover {
+  box-shadow: 0 4px 12px rgba(247, 127, 0, 0.2);
+  transform: scale(1.05);
+}
+
+/* 危险/异常状态标签：红色系 */
+.badge-danger {
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+  color: #f44336;
+  border: 1px solid #ef9a9a;
+}
+
+.badge-danger:hover {
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.2);
+  transform: scale(1.05);
+}
+
+/* ==========================================================================
+   第九部分：操作按钮样式
+   作用：定义表格中操作列的小按钮样式，如"编辑"、"删除"、"拉黑"等。
+   这些按钮比普通按钮更小，适合在表格单元格中使用。
+   ========================================================================== */
+
+/* 小号按钮：比普通按钮更紧凑 */
+.btn-sm {
+  padding: 8px 14px;
+  font-size: 12px;
+  margin-right: 5px;  /* 多个按钮之间的间距 */
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+/* 成功按钮（绿色）：用于"解除拉黑"等正向操作 */
+.btn-success {
+  background: linear-gradient(135deg, #1AAD19 0%, #0d8c0f 100%);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(26, 173, 25, 0.3);
+}
+
+/* 危险按钮（红色）：用于"删除"、"拉黑"等危险操作 */
+.btn-danger {
+  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(244, 67, 54, 0.3);
+}
+
+/* 信息按钮（蓝色）：用于"查看详情"等信息类操作 */
+.btn-info {
+  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-info:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(33, 150, 243, 0.3);
+}
+
+/* ==========================================================================
+   第十部分：分页样式
+   作用：定义分页导航按钮的样式。
+   当数据量较大时，使用分页来分批显示数据，避免一次加载过多内容。
+   ========================================================================== */
+
+/* 分页容器：使用 Flexbox 实现水平居中排列 */
+.pagination {
+  display: flex;
+  justify-content: center;  /* 水平居中 */
+  margin-top: 20px;
+  gap: 8px;                 /* 按钮之间的间距 */
+  flex-wrap: wrap;
+}
+
+/* 分页按钮样式 */
+.pagination button {
+  padding: 10px 14px;
+  border: 2px solid #ddd;
+  background: white;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  color: #666;
+}
+
+.pagination button:hover {
+  border-color: #FF6B35;
+  color: #FF6B35;
+  transform: translateY(-2px);
+}
+
+/* 当前页按钮的高亮样式：橙色渐变背景，白色文字 */
+.pagination button.active {
+  background: linear-gradient(135deg, #FF6B35 0%, #F77F00 100%);
+  color: white;
+  border-color: #FF6B35;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+/* PLACEHOLDER_MODAL_STYLES */
+
+/* ==========================================================================
+   第十一部分：模态框（弹窗）样式
+   作用：定义模态框组件的外观和布局。
+   模态框是一种覆盖在页面上方的弹窗，用于显示表单、确认对话框等。
+   它由三部分组成：半透明的背景遮罩层、白色的内容区域、以及头部/主体/底部三个区域。
+
+   模态框结构示意图：
+   ┌─────────────────────────────────────┐  ← 半透明黑色遮罩（覆盖整个页面）
+   │                                     │
+   │   ┌─────────────────────────────┐   │
+   │   │  标题              × 关闭   │   │  ← modal-header（头部）
+   │   ├─────────────────────────────┤   │
+   │   │                             │   │
+   │   │  表单内容 / 详情内容         │   │  ← modal-body（主体）
+   │   │                             │   │
+   │   ├─────────────────────────────┤   │
+   │   │              取消  确定      │   │  ← modal-footer（底部）
+   │   └─────────────────────────────┘   │
+   │                                     │
+   └─────────────────────────────────────┘
+   ========================================================================== */
+
+/* 模态框遮罩层：覆盖整个页面的半透明黑色背景 */
+.modal {
+  display: none;           /* 默认隐藏，通过 JavaScript 控制显示 */
+  position: fixed;         /* 固定定位，不随页面滚动 */
+  z-index: 1000;           /* 层级设为1000，确保显示在所有其他元素之上 */
+  left: 0;
+  top: 0;
+  width: 100%;             /* 覆盖整个页面宽度 */
+  height: 100%;            /* 覆盖整个页面高度 */
+  background-color: rgba(0, 0, 0, 0.6);  /* 半透明黑色背景（60%透明度） */
+  overflow: auto;          /* 内容超出时可滚动 */
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 模态框内容区域：白色卡片，水平居中 */
+.modal-content {
+  background-color: #fff;
+  margin: 5% auto;        /* 距顶部5%，水平自动居中 */
+  padding: 0;
+  border-radius: 12px;
+  width: 90%;              /* 宽度为页面的90% */
+  max-width: 600px;        /* 最大宽度600px，防止在大屏幕上过宽 */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);  /* 较深的阴影，增强弹窗的"浮起"效果 */
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 模态框头部：显示标题和关闭按钮 */
+.modal-header {
+  padding: 20px 30px;
+  border-bottom: 2px solid #FF6B35;  /* 篮球橙色分隔线 */
+  display: flex;
+  justify-content: space-between;  /* 标题在左，关闭按钮在右 */
+  align-items: center;
+  background: linear-gradient(90deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px 12px 0 0;
+}
+
+/* 模态框标题样式 */
+.modal-header h3 {
+  margin: 0;
+  color: #1a1a1a;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* 模态框关闭按钮（× 号） */
+.modal-header .close {
+  font-size: 28px;
+  font-weight: bold;
+  color: #999;
+  cursor: pointer;
+  line-height: 1;  /* 行高设为1，确保 × 号垂直居中 */
+  transition: all 0.3s ease;
+}
+
+/* 关闭按钮悬停效果：颜色变深，旋转 */
+.modal-header .close:hover {
+  color: #FF6B35;
+  transform: rotate(90deg);
+}
+
+/* 模态框主体：表单或内容的显示区域 */
+.modal-body {
+  padding: 30px;
+  max-height: 60vh;    /* 最大高度为视口高度的60%，防止内容过多撑满屏幕 */
+  overflow-y: auto;    /* 内容超出时显示垂直滚动条 */
+}
+
+/* 模态框底部：通常放置"取消"和"确定"按钮 */
+.modal-footer {
+  padding: 20px 30px;
+  border-top: 1px solid #eee;  /* 顶部分隔线 */
+  text-align: right;            /* 按钮右对齐 */
+  background-color: #f8f9fa;
+  border-radius: 0 0 12px 12px;
+}
+
+/* 底部按钮之间的间距 */
+.modal-footer button {
+  margin-left: 10px;
+}
+
+/* ==========================================================================
+   第十二部分：价格表单样式
+   作用：定义场地价格设置表单的布局。
+   价格表单中每一行包含一个标签（如"工作日白天"）和一个价格输入框。
+   使用 Flexbox 实现标签和输入框的水平排列。
+   ========================================================================== */
+
+/* 价格表单标题 */
+.price-form h4 {
+  color: #333;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+/* 价格表单的每一行：标签 + 输入框 水平排列 */
+.price-item {
+  display: flex;           /* 弹性布局，实现水平排列 */
+  align-items: center;     /* 垂直居中对齐 */
+  margin-bottom: 15px;
+}
+
+/* 价格标签：固定宽度，确保所有输入框左侧对齐 */
+.price-item label {
+  width: 150px;            /* 固定宽度150px */
+  color: #666;
+  font-size: 14px;
+}
+
+/* 价格输入框：占据标签右侧的剩余空间 */
+.price-item input {
+  flex: 1;                 /* 占据剩余空间 */
+  padding: 10px 12px;
+  border: 2px solid #e9ecef;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.price-item input:focus {
+  outline: none;
+  border-color: #FF6B35;   /* 边框变为篮球橙色 */
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+/* ==========================================================================
+   第十三部分：通用表单控件样式
+   作用：定义通用的表单输入框样式。
+   .form-control 是一个通用类名，可以应用到任何需要统一样式的输入框上。
+   ========================================================================== */
+
+/* 通用表单输入框 */
+.form-control {
+  width: 100%;             /* 宽度占满父容器 */
+  padding: 12px 14px;
+  border: 2px solid #e9ecef;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 15px;     /* 底部间距，与下一个元素保持距离 */
+  transition: all 0.3s ease;
+  background-color: #ffffff;
+}
+
+.form-control:hover {
+  border-color: #FF6B35;
+}
+
+/* 通用表单输入框获得焦点时的样式 */
+.form-control:focus {
+  outline: none;
+  border-color: #FF6B35;   /* 边框变为篮球橙色 */
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+  background-color: #ffffff;
+}
+
+/* ==========================================================================
+   第十四部分：增强的交互效果和美化样式
+   ========================================================================== */
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #FF6B35 0%, #F77F00 100%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #F77F00 0%, #FF6B35 100%);
+}
+
+/* 选中文本的样式 */
+::selection {
+  background: linear-gradient(135deg, #FF6B35 0%, #F77F00 100%);
+  color: white;
+}
+
+/* 链接样式 */
+a {
+  color: #FF6B35;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  color: #F77F00;
+  text-decoration: underline;
+}
+
+/* 表单标签美化 */
+label {
+  color: #1a1a1a;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+/* 输入框容器 */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+/* 复选框和单选框美化 */
+input[type="checkbox"],
+input[type="radio"] {
+  cursor: pointer;
+  accent-color: #FF6B35;
+}
+
+/* 下拉菜单美化 */
+select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #e9ecef;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF6B35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px;
+  padding-right: 40px;
+}
+
+select:hover {
+  border-color: #FF6B35;
+}
+
+select:focus {
+  outline: none;
+  border-color: #FF6B35;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+/* 文本区域美化 */
+textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #e9ecef;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  transition: all 0.3s ease;
+}
+
+textarea:hover {
+  border-color: #FF6B35;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #FF6B35;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+/* 禁用状态 */
+input:disabled,
+select:disabled,
+textarea:disabled,
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 加载动画 */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 107, 53, 0.3);
+  border-top-color: #FF6B35;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* 提示信息样式 */
+.alert {
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid;
+  transition: all 0.3s ease;
+}
+
+.alert-success {
+  background-color: #e8f5e9;
+  border-left-color: #1AAD19;
+  color: #1AAD19;
+}
+
+.alert-warning {
+  background-color: #fff3e0;
+  border-left-color: #F77F00;
+  color: #F77F00;
+}
+
+.alert-danger {
+  background-color: #ffebee;
+  border-left-color: #f44336;
+  color: #f44336;
+}
+
+.alert-info {
+  background-color: #e3f2fd;
+  border-left-color: #2196F3;
+  color: #2196F3;
+}
+
+/* 徽章计数器 */
+.badge-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  background: linear-gradient(135deg, #FF6B35 0%, #F77F00 100%);
+  color: white;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* 分隔线 */
+hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #FF6B35, transparent);
+  margin: 20px 0;
+}
+
+/* 代码块美化 */
+code {
+  background-color: #f8f9fa;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  color: #FF6B35;
+}
+
+pre {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+  border-left: 4px solid #FF6B35;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .header h2 {
+    font-size: 20px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .modal-content {
+    width: 95%;
+    margin: 20% auto;
+  }
+}
+
+/* 小按钮样式 */
+.btn-small {
+  padding: 8px 16px;
+  font-size: 13px;
+  margin-left: 10px;
+  border-radius: 8px;
+  background: white;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-small:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  transform: translateY(-1px);
+}
+
+.btn-small.btn-primary {
+  background: linear-gradient(135deg, #FF6B35 0%, #F77F00 100%);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.btn-small.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.4);
+}
+
+/* 模态框关闭按钮 */
+.modal-close {
+  font-size: 28px;
+  font-weight: bold;
+  color: #999;
+  cursor: pointer;
+  line-height: 1;
+  transition: all 0.3s ease;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.modal-close:hover {
+  color: #FF6B35;
+  transform: rotate(90deg);
+}
+
+/* 模态框操作按钮区域 */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.modal-actions .btn {
+  width: auto;
+  min-width: 100px;
+}
+
+/* 表单提示文字 */
+.form-hint {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #999;
+}
+
+/* 显示模态框 */
+.modal.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 顶部用户信息区域按钮样式 */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-info span {
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+}

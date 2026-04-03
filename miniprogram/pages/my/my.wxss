@@ -1,0 +1,246 @@
+/* ==================== 页面容器 ==================== */
+.container {
+  background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+  min-height: 100vh;
+}
+
+/* ==================== 用户头部卡片 ==================== */
+.user-header {
+  display: flex;
+  align-items: center;
+  padding: 60rpx 30rpx;
+  background: linear-gradient(135deg, #FF6B35 0%, #F77F00 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.user-header::before {
+  content: '🏀';
+  position: absolute;
+  right: -20rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 200rpx;
+  opacity: 0.1;
+}
+
+.avatar {
+  width: 130rpx;
+  height: 130rpx;
+  border-radius: 50%;
+  margin-right: 30rpx;
+  border: 4rpx solid rgba(255,255,255,0.5);
+  box-shadow: 0 8rpx 20rpx rgba(0,0,0,0.2);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.user-info {
+  flex: 1;
+  z-index: 1;
+}
+
+.nickname {
+  display: block;
+  font-size: 38rpx;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 12rpx;
+  text-shadow: 0 2rpx 4rpx rgba(0,0,0,0.2);
+}
+
+.phone {
+  font-size: 26rpx;
+  color: rgba(255,255,255,0.9);
+}
+
+/* ==================== 订单区域 ==================== */
+.order-section {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  margin: 20rpx;
+  border-radius: 20rpx;
+  padding: 35rpx 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.08);
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #1a1a1a;
+  display: block;
+  margin-bottom: 30rpx;
+}
+
+.order-tabs {
+  display: flex;
+  justify-content: space-around;
+}
+
+.order-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.order-tab:active {
+  transform: scale(0.9);
+}
+
+.tab-icon {
+  font-size: 56rpx;
+  margin-bottom: 12rpx;
+  filter: drop-shadow(0 2rpx 4rpx rgba(0,0,0,0.1));
+}
+
+.tab-text {
+  font-size: 26rpx;
+  color: #666;
+  font-weight: 500;
+}
+
+/* 订单数量徽章 */
+.tab-badge {
+  position: absolute;
+  top: -10rpx;
+  right: -10rpx;
+  background: linear-gradient(135deg, #FF6B35 0%, #F77F00 100%);
+  color: #fff;
+  font-size: 22rpx;
+  min-width: 36rpx;
+  height: 36rpx;
+  line-height: 36rpx;
+  text-align: center;
+  border-radius: 18rpx;
+  padding: 0 10rpx;
+  box-shadow: 0 4rpx 12rpx rgba(255, 107, 53, 0.4);
+  font-weight: bold;
+}
+
+/* ==================== 菜单区域 ==================== */
+.menu-section {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  margin: 20rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.08);
+  overflow: hidden;
+  animation: fadeIn 0.6s ease-out 0.2s both;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 35rpx 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.menu-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6rpx;
+  background: linear-gradient(135deg, #FF6B35 0%, #F77F00 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.menu-item:active::before {
+  opacity: 1;
+}
+
+.menu-item:active {
+  background-color: rgba(255, 107, 53, 0.05);
+}
+
+/* 绑定手机号按钮样式 - 让 button 看起来和普通菜单项一样 */
+.phone-button {
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 35rpx 30rpx;
+  margin: 0;
+  line-height: normal;
+  text-align: left;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 1rpx solid #f0f0f0;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.phone-button::after {
+  border: none;
+}
+
+.phone-button::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6rpx;
+  background: linear-gradient(135deg, #FF6B35 0%, #F77F00 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.phone-button:active::before {
+  opacity: 1;
+}
+
+.phone-button:active {
+  background-color: rgba(255, 107, 53, 0.05);
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-icon {
+  font-size: 44rpx;
+  margin-right: 20rpx;
+  filter: drop-shadow(0 2rpx 4rpx rgba(0,0,0,0.1));
+}
+
+.menu-text {
+  flex: 1;
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.menu-arrow {
+  font-size: 28rpx;
+  color: #999;
+  transition: transform 0.3s ease;
+}
+
+.menu-item:active .menu-arrow {
+  transform: translateX(5rpx);
+}

@@ -1,0 +1,43 @@
+<!--
+  登录页面模板文件 (login.wxml)
+  这是用户登录页面，用户首次使用小程序或未登录时会看到此页面。
+  页面包含：应用Logo、标题、欢迎语、微信授权登录按钮、提示信息。
+
+  【页面说明】
+  微信小程序需要用户授权后才能获取用户的基本信息（如头像、昵称等），
+  所以需要一个登录页面引导用户点击按钮进行授权。
+-->
+
+<!-- 页面最外层容器 -->
+<view class="container">
+
+  <!-- 登录框：包含所有登录相关的内容，居中显示 -->
+  <view class="login-box">
+
+    <!--
+      应用Logo图片
+      src="/images/logo.png"：图片路径，/ 开头表示从小程序根目录开始查找
+      mode="aspectFit"：图片保持原始比例缩放，确保完整显示不被裁剪
+    -->
+    <image class="logo" src="/images/logo.png" mode="aspectFit" />
+
+    <!-- 应用标题 -->
+    <text class="title">篮球场预定</text>
+
+    <!-- 欢迎语副标题 -->
+    <text class="subtitle">欢迎使用篮球场预定小程序</text>
+
+    <!--
+      微信授权登录按钮
+      bindtap="onLogin"：用户点击此按钮时，会执行 JS 文件中的 onLogin 函数
+      type="primary"：按钮样式为微信主题色（绿色）
+    -->
+    <button class="login-btn" bindtap="onLogin" type="primary">微信授权登录</button>
+
+    <!-- 底部提示信息，告知用户首次登录需要授权 -->
+    <view class="tips">
+      <text>提示：首次登录需要授权获取您的基本信息</text>
+    </view>
+
+  </view>
+</view>

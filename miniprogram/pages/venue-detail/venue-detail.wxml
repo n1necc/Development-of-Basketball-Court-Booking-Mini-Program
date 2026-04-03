@@ -1,0 +1,168 @@
+<!--
+  场馆详情页面模板文件 (venue-detail.wxml)
+  这是场馆的详细信息页面，用户从场馆列表点击某个场馆后进入此页面。
+  页面包含：场馆图片轮播、基本信息、收藏按钮、日期选择、时段选择、用户评价列表。
+
+  【本页面涉及的重要概念】
+  - <swiper>：轮播图组件，可以左右滑动查看多张图片
+  - <picker mode="date">：日期选择器，点击后弹出日期选择面板
+  - 三元表达式 (条件 ? 值1 : 值2)：如果条件为真返回值1，否则返回值2
+  - 嵌套循环：一个 wx:for 循环内部再嵌套一个 wx:for 循环
+-->
+
+<!-- 页面最外层容器 -->
+<view class="container">
+
+  <!--
+    wx:if="{{venue}}"：只有当 venue 数据加载完成后才显示页面内容
+    这样可以避免数据还没加载好时页面显示空白或报错
+  -->
+  <view wx:if="{{venue}}">
+
+    <!-- ==================== 场馆图片轮播区域 ==================== -->
+    <!--
+      <swiper> 轮播图组件
+      - indicator-dots：显示底部的小圆点指示器
+      - autoplay：自动播放轮播图
+    -->
+    <swiper class="venue-swiper" indicator-dots autoplay>
+      <!--
+        wx:for="{{venue.images}}"：遍历场馆的图片数组
+        每张图片生成一个轮播页 <swiper-item>
+      -->
+      <swiper-item wx:for="{{venue.images}}" wx:key="index">
+        <!-- 显示场馆图片，mode="aspectFill" 表示填满容器并保持比例 -->
+        <image src="{{item}}" mode="aspectFill" />
+      </swiper-item>
+    </swiper>
+
+    <!-- ==================== 场馆基本信息区域 ==================== -->
+    <view class="venue-info">
+      <!-- 信息头部：场馆名称 + 收藏按钮 -->
+      <view class="info-header">
+        <!-- 场馆名称 -->
+        <text class="venue-name">{{venue.name}}</text>
+        <!--
+          收藏按钮
+          bindtap="toggleFavorite"：点击切换收藏/取消收藏状态
+          按钮文字使用三元表达式动态显示：
+          如果 isFavorite 为 true（已收藏），显示"已收藏"；否则显示"收藏"
+        -->
+        <button class="favorite-btn" bindtap="toggleFavorite">
+          {{isFavorite ? '已收藏' : '收藏'}}
+        </button>
+      </view>
+      <!-- 场馆位置 -->
+      <text class="venue-location">{{venue.location}}</text>
+      
+      <!-- 维护状态提示 -->
+      <view wx:if="{{venue.maintenance_status === 'maintenance'}}" class="maintenance-notice">
+        <view class="maintenance-icon">🔧</view>
+        <view class="maintenance-content">
+          <text class="maintenance-title">场地维护中</text>
+          <text class="maintenance-message">{{venue.maintenance_message || '该场地正在维护中，暂不接受预订'}}</text>
+          <text wx:if="{{venue.maintenance_end_time}}" class="maintenance-time">预计恢复时间：{{venue.maintenance_end_time}}</text>
+        </view>
+      </view>
+      
+      <!--
+        场馆设施标签列表
+        wx:for="{{venue.facilities}}"：遍历设施数组，每个设施显示为一个标签
+      -->
+      <view class="facilities">
+        <text class="facility" wx:for="{{venue.facilities}}" wx:key="index">{{item}}</text>
+      </view>
+      <!-- 场馆描述介绍 -->
+      <text class="description">{{venue.description}}</text>
+    </view>
+
+    <!-- ==================== 日期选择区域 ==================== -->
+    <view class="date-selector">
+      <text class="section-title">选择日期</text>
+      <!--
+        <picker mode="date">：日期选择器组件
+        - mode="date"：选择器类型为日期（年-月-日）
+        - value="{{selectedDate}}"：当前选中的日期
+        - bindchange="onDateChange"：用户选择新日期后触发 onDateChange 函数
+        点击后会从屏幕底部弹出日期选择面板
+      -->
+      <picker mode="date" value="{{selectedDate}}" bindchange="onDateChange">
+        <!-- 显示当前选中的日期文字 -->
+        <view class="date-picker">{{selectedDate}}</view>
+      </picker>
+    </view>
+
+    <!-- ==================== 可预订时段选择区域 ==================== -->
+    <view class="time-slots">
+      <text class="section-title">可预订时段</text>
+      <!-- 时段网格布局，以卡片形式展示所有时段 -->
+      <view class="slots-grid">
+        <!--
+          wx:for="{{timeSlots}}"：遍历时段数组，每个时段生成一个卡片
+          class="slot-item {{item.status}}"：动态添加状态样式类名
+            - 不同状态（available/booked/locked）会有不同的背景颜色
+          bindtap="bookVenue"：点击时段卡片触发预订操作
+          data-slot="{{item}}"：把当前时段的完整数据传递给点击事件函数
+        -->
+        <view
+          class="slot-item {{item.status}}"
+          wx:for="{{timeSlots}}"
+          wx:key="index"
+          bindtap="bookVenue"
+          data-slot="{{item}}">
+          <!-- 时段的开始时间和结束时间 -->
+          <text class="slot-time">{{item.start_time}}-{{item.end_time}}</text>
+          <!-- 该时段的价格 -->
+          <text class="slot-price">¥{{item.price}}</text>
+          <!--
+            时段状态文字，使用嵌套的三元表达式判断：
+            - 如果状态是 'available'（可用），显示"可预订"
+            - 如果状态是 'booked'（已被预订），显示"已预订"
+            - 其他情况（如 locked 已锁定），显示"已锁定"
+          -->
+          <text class="slot-status">
+            {{item.status === 'available' ? '可预订' : item.status === 'booked' ? '已预订' : '已锁定'}}
+          </text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ==================== 用户评价列表区域 ==================== -->
+    <view class="reviews">
+      <text class="section-title">用户评价</text>
+      <!--
+        wx:for="{{reviews}}"：遍历评价数组，每条评价生成一个评价卡片
+      -->
+      <view class="review-item" wx:for="{{reviews}}" wx:key="id">
+        <!--
+          评价用户的头像
+          使用 || 设置默认头像：如果用户没有头像，则使用微信默认头像图片
+        -->
+        <image class="user-avatar" src="{{item.user.avatarUrl || 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'}}" />
+        <view class="review-content">
+          <!-- 评价用户的昵称 -->
+          <text class="user-name">{{item.user.nickName}}</text>
+          <!--
+            星级评分显示
+            这里使用了嵌套循环（循环中的循环）：
+            - 外层循环遍历评价列表（上面的 wx:for="{{reviews}}"）
+            - 内层循环遍历 [1,2,3,4,5] 数组，生成5颗星
+            - wx:for-item="star"：将内层循环变量命名为 star（避免与外层的 item 冲突）
+            - {{star <= item.rating ? '★' : '☆'}}：
+              如果 star 的值小于等于评分值，显示实心星 ★，否则显示空心星 ☆
+              例如评分为3分，则显示 ★★★☆☆
+          -->
+          <view class="rating">
+            <text class="star" wx:for="{{[1,2,3,4,5]}}" wx:key="star" wx:for-item="star">
+              {{star <= item.rating ? '★' : '☆'}}
+            </text>
+          </view>
+          <!-- 评价文字内容 -->
+          <text class="review-text">{{item.content}}</text>
+          <!-- 评价发布时间 -->
+          <text class="review-time">{{item.created_at}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

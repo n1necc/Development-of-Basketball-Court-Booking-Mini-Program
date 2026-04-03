@@ -1,0 +1,149 @@
+<!--
+  订单详情页面模板文件 (order-detail.wxml)
+  这是单个订单的详细信息页面，用户从订单列表点击某个订单后进入此页面。
+  页面包含：订单状态展示、核销二维码（仅待使用订单显示）、完整订单信息、评价按钮。
+
+  【本页面涉及的重要概念】
+  - 核销码（二维码）：用户到达场地后，出示此二维码给工作人员扫描，确认使用
+  - 多条件判断：使用多个 wx:if 控制不同状态下显示不同的内容
+  - 复合条件：wx:if 中可以使用 && (并且)、|| (或者) 等逻辑运算符
+-->
+
+<!-- 页面最外层容器 -->
+<view class="container">
+
+  <!--
+    wx:if="{{order}}"：只有当订单数据加载完成后才显示页面内容
+    防止数据未加载时页面报错
+  -->
+  <view wx:if="{{order}}">
+
+    <!-- ==================== 订单状态展示区域 ==================== -->
+    <!--
+      根据订单状态显示不同的图标和文字
+      使用三元表达式进行多条件判断
+    -->
+    <view class="status-section">
+      <!--
+        状态图标：根据订单状态显示不同的表情图标
+        - 'unconfirmed'（未确认）→ ⏳
+        - 'pending'（待支付）→ 💳
+        - 'paid'（已支付/待使用）→ ✅
+        - 'completed'（已完成）→ 🎉
+        - 'cancelled'（已取消）→ ❌
+        - 'refunded'（已退款）→ 💸
+      -->
+      <text class="status-icon">
+        {{order.order_status === 'unconfirmed' ? '⏳' : order.order_status === 'pending' ? '💳' : order.order_status === 'paid' ? '✅' : order.order_status === 'completed' ? '🎉' : order.order_status === 'refunded' ? '💸' : '❌'}}
+      </text>
+      <!--
+        状态描述文字：
+        - 'unconfirmed' → "订单未确认，请确认订单"
+        - 'pending' → "订单已确认，请完成支付"
+        - 'paid' → "支付成功，等待使用"
+        - 'completed' → "订单已完成"
+        - 'cancelled' → "订单已取消"
+        - 'refunded' → "订单已退款"
+      -->
+      <text class="status-text">
+        {{order.order_status === 'unconfirmed' ? '订单未确认，请确认订单' : order.order_status === 'pending' ? '订单已确认，请完成支付' : order.order_status === 'paid' ? '支付成功，等待使用' : order.order_status === 'completed' ? '订单已完成' : order.order_status === 'refunded' ? '订单已退款' : '订单已取消'}}
+      </text>
+    </view>
+
+    <!-- ==================== 核销二维码区域 ==================== -->
+    <!--
+      wx:if="{{order.order_status === 'paid' && qrcodeUrl}}"：
+      同时满足两个条件才显示核销码：
+      1. 订单状态为"已支付/待使用"（已完成或已取消的订单不需要核销码）
+      2. 二维码图片地址存在（qrcodeUrl 不为空）
+    -->
+    <view class="qrcode-section" wx:if="{{order.order_status === 'paid' && qrcodeUrl}}">
+      <text class="section-title">核销码</text>
+      <!-- 核销二维码图片，mode="aspectFit" 保持比例完整显示 -->
+      <image class="qrcode" src="{{qrcodeUrl}}" mode="aspectFit" />
+      <!-- 提示用户如何使用核销码 -->
+      <text class="qrcode-tip">请在场地出示此二维码进行核销</text>
+    </view>
+
+    <!-- ==================== 订单详细信息区域 ==================== -->
+    <view class="info-section">
+      <text class="section-title">订单信息</text>
+
+      <!-- 订单号 -->
+      <view class="info-row">
+        <text class="label">订单号：</text>
+        <text class="value">{{order.order_no}}</text>
+      </view>
+
+      <!-- 场地名称：通过 order.venue.name 访问关联的场馆名称 -->
+      <view class="info-row">
+        <text class="label">场地名称：</text>
+        <text class="value">{{order.venue.name}}</text>
+      </view>
+
+      <!-- 场地位置 -->
+      <view class="info-row">
+        <text class="label">场地位置：</text>
+        <text class="value">{{order.venue.location}}</text>
+      </view>
+
+      <!-- 预订日期 -->
+      <view class="info-row">
+        <text class="label">预订日期：</text>
+        <text class="value">{{order.book_date}}</text>
+      </view>
+
+      <!-- 预订时段 -->
+      <view class="info-row">
+        <text class="label">预订时段：</text>
+        <text class="value">{{order.start_time}} - {{order.end_time}}</text>
+      </view>
+
+      <!-- 订单金额，price 样式类通常会用醒目颜色显示 -->
+      <view class="info-row">
+        <text class="label">订单金额：</text>
+        <text class="value price">¥{{order.total_price}}</text>
+      </view>
+
+      <!-- 订单创建时间 -->
+      <view class="info-row">
+        <text class="label">创建时间：</text>
+        <text class="value">{{order.created_at}}</text>
+      </view>
+    </view>
+
+    <!-- ==================== 订单操作按钮区域 ==================== -->
+    <view class="action-section">
+      <!-- 未确认订单：显示确认订单和取消订单按钮 -->
+      <view wx:if="{{order.order_status === 'unconfirmed'}}" class="action-buttons">
+        <button class="action-btn cancel-btn" bindtap="cancelOrder">取消订单</button>
+        <button class="action-btn confirm-btn" bindtap="confirmOrder">确认订单</button>
+      </view>
+      
+      <!-- 待支付订单：显示支付订单和取消订单按钮 -->
+      <view wx:if="{{order.order_status === 'pending'}}" class="action-buttons">
+        <button class="action-btn cancel-btn" bindtap="cancelOrder">取消订单</button>
+        <button class="action-btn pay-btn" bindtap="payOrder">立即支付</button>
+      </view>
+      
+      <!-- 已支付订单：显示取消订单按钮 -->
+      <button wx:if="{{order.order_status === 'paid'}}" class="action-btn single cancel-btn" bindtap="cancelOrder">取消订单</button>
+    </view>
+
+    <!-- ==================== 评价按钮 ==================== -->
+    <!--
+      评价按钮的显示条件（使用 && 表示"并且"，|| 表示"或者"）：
+      1. (order.order_status === 'completed' || order.order_status === 'paid')
+         订单状态为"已完成"或"已支付/待使用"
+      2. && !order.review
+         并且该订单还没有评价（!表示"不是/没有"）
+      两个条件同时满足时才显示评价按钮，避免重复评价
+    -->
+    <button
+      class="review-btn"
+      wx:if="{{(order.order_status === 'completed' || order.order_status === 'paid') && !order.review}}"
+      bindtap="reviewOrder">
+      评价订单
+    </button>
+  </view>
+</view>

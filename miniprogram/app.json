@@ -1,0 +1,50 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/booking/booking",
+    "pages/venue-detail/venue-detail",
+    "pages/order-confirm/order-confirm",
+    "pages/order-detail/order-detail",
+    "pages/my/my",
+    "pages/orders/orders",
+    "pages/favorites/favorites",
+    "pages/search/search",
+    "pages/login/login",
+    "pages/review/review",
+    "pages/profile/profile"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#f97316",
+    "navigationBarTitleText": "篮球场预定",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#8e8e93",
+    "selectedColor": "#FF6B35",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/booking/booking",
+        "text": "预订"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userInfo": {
+      "desc": "用于完善用户资料，显示您的头像和昵称"
+    }
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,328 @@
+.container {
+  background: linear-gradient(180deg, #fff8f3 0%, #ffe8d6 100%);
+  min-height: 100vh;
+}
+
+/* ==================== 状态筛选标签栏 ==================== */
+.status-tabs {
+  display: flex;
+  background: #fff;
+  padding: 20rpx 0;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15rpx 0;
+  position: relative;
+}
+
+.tab-text {
+  font-size: 28rpx;
+  color: #666;
+  font-weight: 500;
+}
+
+.tab-item.active .tab-text {
+  color: #FF6B35;
+  font-weight: bold;
+}
+
+.tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40rpx;
+  height: 4rpx;
+  background: linear-gradient(135deg, #FF6B35 0%, #F77F00 100%);
+  border-radius: 2rpx;
+}
+
+.tab-badge {
+  position: absolute;
+  top: 5rpx;
+  right: 20rpx;
+  background: #FF6B35;
+  color: #fff;
+  font-size: 20rpx;
+  padding: 2rpx 10rpx;
+  border-radius: 15rpx;
+  min-width: 30rpx;
+  text-align: center;
+}
+
+/* ==================== 待支付订单提示区域 ==================== */
+.pending-notice {
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+  margin: 20rpx 30rpx;
+  padding: 25rpx 30rpx;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  border-left: 6rpx solid #FF6B35;
+}
+
+.notice-icon {
+  font-size: 48rpx;
+  margin-right: 20rpx;
+}
+
+.notice-content {
+  flex: 1;
+}
+
+.notice-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #e65100;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.notice-subtitle {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.order-list {
+  padding: 30rpx;
+}
+
+.order-item {
+  background: linear-gradient(135deg, #ffffff 0%, #fff5f0 100%);
+  border-radius: 20rpx;
+  margin-bottom: 30rpx;
+  overflow: hidden;
+  box-shadow: 0 8rpx 25rpx rgba(255, 107, 53, 0.12);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.order-item:active {
+  transform: translateY(-4rpx);
+  box-shadow: 0 12rpx 35rpx rgba(255, 107, 53, 0.2);
+}
+
+.order-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6rpx;
+  height: 100%;
+  background: linear-gradient(180deg, #FF6B35 0%, #F77F00 100%);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25rpx 35rpx;
+  border-bottom: 1rpx solid #ecf0f1;
+}
+
+.order-no {
+  font-size: 26rpx;
+  color: #7f8c8d;
+  font-weight: 500;
+}
+
+.order-status {
+  font-size: 26rpx;
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  font-weight: 500;
+}
+
+.order-status.paid {
+  background: linear-gradient(135deg, #FFE8D6 0%, #FFF5F0 100%);
+  color: #FF6B35;
+  box-shadow: 0 2rpx 10rpx rgba(255, 107, 53, 0.2);
+}
+
+.order-status.completed {
+  background: linear-gradient(135deg, #e0e0e0 0%, #bdbdbd 100%);
+  color: #616161;
+}
+
+.order-status.cancelled {
+  background: linear-gradient(135deg, #ffcdd2 0%, #ef9a9a 100%);
+  color: #c62828;
+  box-shadow: 0 2rpx 10rpx rgba(244, 67, 54, 0.2);
+}
+
+.order-content {
+  display: flex;
+  padding: 25rpx 35rpx;
+}
+
+.venue-image {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 15rpx;
+  margin-right: 25rpx;
+  box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.1);
+}
+
+.order-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.venue-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 10rpx;
+}
+
+.order-time {
+  font-size: 26rpx;
+  color: #7f8c8d;
+  margin-bottom: 10rpx;
+}
+
+.order-price {
+  font-size: 36rpx;
+  color: #FF6B35;
+  font-weight: bold;
+}
+
+/* 支付截止时间显示 */
+.pay-deadline {
+  display: flex;
+  align-items: center;
+  margin-top: 10rpx;
+  padding: 8rpx 15rpx;
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+  border-radius: 8rpx;
+  align-self: flex-start;
+}
+
+.deadline-icon {
+  font-size: 24rpx;
+  margin-right: 8rpx;
+}
+
+.deadline-text {
+  font-size: 24rpx;
+  color: #c62828;
+  font-weight: 500;
+}
+
+.order-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20rpx 35rpx;
+  border-top: 1rpx solid #ecf0f1;
+}
+
+/* 待支付订单操作区域 */
+.pending-actions {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.deadline-hint {
+  font-size: 24rpx;
+  color: #FF6B35;
+  font-weight: 500;
+}
+
+.pay-btn-primary {
+  padding: 16rpx 45rpx;
+  background: linear-gradient(135deg, #FF6B35 0%, #F77F00 100%);
+  color: #fff;
+  font-size: 28rpx;
+  border-radius: 35rpx;
+  font-weight: bold;
+  box-shadow: 0 4rpx 20rpx rgba(255, 107, 53, 0.4);
+  transition: all 0.3s ease;
+}
+
+.pay-btn-primary:active {
+  transform: scale(0.95);
+  box-shadow: 0 2rpx 12rpx rgba(255, 107, 53, 0.3);
+}
+
+.cancel-btn {
+  padding: 12rpx 35rpx;
+  background-color: #fff;
+  color: #FF6B35;
+  border: 2rpx solid #FF6B35;
+  font-size: 26rpx;
+  border-radius: 30rpx;
+  font-weight: 500;
+  box-shadow: 0 2rpx 10rpx rgba(255, 107, 53, 0.15);
+  transition: all 0.3s ease;
+}
+
+.cancel-btn:active {
+  background: linear-gradient(135deg, #FFE8D6 0%, #FFF5F0 100%);
+  transform: scale(0.95);
+}
+
+.confirm-btn {
+  padding: 12rpx 35rpx;
+  background: linear-gradient(135deg, #FF6B35 0%, #F77F00 100%);
+  color: #fff;
+  font-size: 26rpx;
+  border-radius: 30rpx;
+  font-weight: 500;
+  box-shadow: 0 2rpx 10rpx rgba(255, 107, 53, 0.3);
+  transition: all 0.3s ease;
+}
+
+.confirm-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 2rpx 8rpx rgba(255, 107, 53, 0.2);
+}
+
+.pay-btn {
+  padding: 12rpx 35rpx;
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: #fff;
+  font-size: 26rpx;
+  border-radius: 30rpx;
+  font-weight: 500;
+  box-shadow: 0 2rpx 10rpx rgba(76, 175, 80, 0.3);
+  transition: all 0.3s ease;
+}
+
+.pay-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 2rpx 8rpx rgba(76, 175, 80, 0.2);
+}
+
+/* 订单状态样式补充 */
+.order-status.unconfirmed {
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+  color: #e65100;
+  box-shadow: 0 2rpx 10rpx rgba(230, 81, 0, 0.2);
+}
+
+.order-status.pending {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  color: #2e7d32;
+  box-shadow: 0 2rpx 10rpx rgba(46, 125, 50, 0.2);
+}
+
+.loading, .no-more, .empty {
+  text-align: center;
+  padding: 60rpx;
+  color: #95a5a6;
+  font-size: 28rpx;
+}

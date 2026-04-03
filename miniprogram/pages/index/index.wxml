@@ -1,0 +1,155 @@
+<!--
+  首页模板文件 (index.wxml)
+  这是篮球场预定小程序的首页，用户打开小程序后最先看到的页面。
+  页面包含：新闻轮播图、快捷操作按钮、最新公告、热门场馆推荐。
+
+  【WXML基础知识】
+  - WXML 是微信小程序的模板语言，类似于网页开发中的 HTML
+  - <view> 相当于 HTML 中的 <div>，是最常用的容器组件，用来包裹其他内容
+  - <text> 相当于 HTML 中的 <span>，用来显示文字
+  - <image> 相当于 HTML 中的 <img>，用来显示图片
+  - class="xxx" 用来给组件添加样式类名，样式在对应的 .wxss 文件中定义
+  - {{变量名}} 是数据绑定语法，会自动显示 JS 文件中 data 里对应变量的值
+  - bindtap="函数名" 是点击事件绑定，用户点击时会执行 JS 文件中对应的函数
+-->
+
+<!-- 页面最外层容器，所有内容都包裹在这个 view 里面 -->
+<view class="container">
+
+  <!-- ==================== 页面顶部标题栏 ==================== -->
+  <!-- 显示页面的标题文字 -->
+  <view class="header">
+    <text class="header-title">新闻资讯</text>
+  </view>
+
+  <!-- ==================== 新闻轮播图区域 ==================== -->
+  <!--
+    <swiper> 是微信小程序提供的轮播图组件，可以自动左右滑动切换内容
+    - indicator-dots：显示轮播图底部的小圆点指示器，让用户知道当前是第几张
+    - autoplay：开启自动播放，不需要用户手动滑动
+    - interval="3000"：每隔3000毫秒（3秒）自动切换到下一张
+    - circular：开启循环播放，最后一张播完会回到第一张
+  -->
+  <view class="news-section">
+    <swiper class="news-swiper" indicator-dots autoplay interval="3000" circular>
+      <!--
+        wx:for="{{newsData}}" 是列表循环渲染
+        意思是：遍历 newsData 数组，数组里有几条新闻，就生成几个 <swiper-item>
+        - item：代表当前遍历到的那一条新闻数据
+        - index：代表当前是第几条（从0开始计数）
+        wx:key="id" 用来标识每一项的唯一性，提高渲染性能
+      -->
+      <swiper-item wx:for="{{newsData}}" wx:key="id">
+        <!--
+          bindtap="goToNewsDetail"：点击这条新闻时，跳转到新闻详情页
+          data-index="{{index}}"：把当前新闻的序号传递给点击事件函数，
+          这样函数就知道用户点的是哪条新闻
+        -->
+        <view class="news-item" bindtap="goToNewsDetail" data-index="{{index}}">
+          <!-- 新闻配图，mode="aspectFill" 表示图片会填满容器并保持比例，可能会裁剪 -->
+          <image class="news-image" src="{{item.image}}" mode="aspectFill" />
+          <!-- 新闻文字覆盖层，显示在图片上方 -->
+          <view class="news-overlay">
+            <!-- {{item.title}} 显示当前新闻的标题 -->
+            <text class="news-title">{{item.title}}</text>
+            <!-- {{item.summary}} 显示当前新闻的摘要简介 -->
+            <text class="news-summary">{{item.summary}}</text>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <!-- ==================== 快捷操作按钮区域 ==================== -->
+  <!-- 四个快捷入口按钮，方便用户快速跳转到常用功能 -->
+  <view class="quick-actions">
+    <!-- 按钮1：点击跳转到预定页面 -->
+    <view class="action-btn" bindtap="goToBooking">
+      <text class="action-icon">📅</text>
+      <text class="action-text">立即预定</text>
+    </view>
+    <!-- 按钮2：点击跳转到场馆列表页面 -->
+    <view class="action-btn" bindtap="goToBooking">
+      <text class="action-icon">🏀</text>
+      <text class="action-text">场馆列表</text>
+    </view>
+    <!-- 按钮3：点击跳转到我的收藏页面 -->
+    <view class="action-btn" bindtap="goToFavorites">
+      <text class="action-icon">⭐</text>
+      <text class="action-text">我的收藏</text>
+    </view>
+    <!-- 按钮4：点击跳转到我的订单页面 -->
+    <view class="action-btn" bindtap="goToOrders">
+      <text class="action-icon">📋</text>
+      <text class="action-text">我的订单</text>
+    </view>
+  </view>
+
+  <!-- ==================== 最新公告区域 ==================== -->
+  <view class="announcements-section">
+    <!-- 区域标题栏 -->
+    <view class="section-header">
+      <text class="section-title">📢 最新公告</text>
+    </view>
+    <!-- 公告列表 -->
+    <view class="announcement-list">
+      <!--
+        wx:for="{{announcements}}"：循环遍历公告数组，每条公告生成一个列表项
+        bindtap="goToAnnouncementDetail"：点击某条公告时跳转到公告详情
+        data-index="{{index}}"：传递当前公告的序号给点击事件
+      -->
+      <view class="announcement-item" wx:for="{{announcements}}" wx:key="id" bindtap="goToAnnouncementDetail" data-index="{{index}}">
+        <view class="announcement-content">
+          <!-- 公告标题 -->
+          <text class="announcement-title">{{item.title}}</text>
+          <!-- 公告发布时间 -->
+          <text class="announcement-date">{{item.created_at}}</text>
+        </view>
+        <!-- 右侧箭头符号，提示用户可以点击查看详情 -->
+        <text class="announcement-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ==================== 热门场馆推荐区域 ==================== -->
+  <view class="hot-venues-section">
+    <!-- 区域标题栏，包含"更多"按钮 -->
+    <view class="section-header">
+      <text class="section-title">🔥 热门场馆</text>
+      <!-- 点击"更多"跳转到完整的场馆列表页面 -->
+      <text class="more-btn" bindtap="goToBooking">更多 ›</text>
+    </view>
+    <!-- 热门场馆卡片列表 -->
+    <view class="venue-list">
+      <!--
+        wx:for="{{hotVenues}}"：循环遍历热门场馆数组
+        bindtap="goToVenueDetail"：点击场馆卡片跳转到场馆详情页
+        data-id="{{item.id}}"：传递场馆的唯一ID，详情页根据此ID加载对应场馆信息
+      -->
+      <view class="venue-card" wx:for="{{hotVenues}}" wx:key="id" bindtap="goToVenueDetail" data-id="{{item.id}}">
+        <!--
+          场馆图片：显示场馆图片数组中的第一张图
+          如果没有图片，则使用一张随机占位图作为默认图片
+          || 是"或"运算符，前面的值为空时使用后面的值
+        -->
+        <image class="venue-image" src="{{item.images[0] || 'https://picsum.photos/800/600?random=1'}}" mode="aspectFill" />
+        <view class="venue-info">
+          <!-- 场馆名称 -->
+          <text class="venue-name">{{item.name}}</text>
+          <!-- 场馆位置，前面带有定位图标 -->
+          <text class="venue-location">📍 {{item.location}}</text>
+          <view class="venue-footer">
+            <!--
+              场馆价格：使用三元表达式判断价格是否存在
+              item.price != null ? item.price : '暂无'
+              意思是：如果价格不为空就显示价格，否则显示"暂无"
+            -->
+            <text class="venue-price">¥{{item.price != null ? item.price : '暂无'}}/时</text>
+            <!-- 预定按钮 -->
+            <view class="book-btn-small">预定</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
